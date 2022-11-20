@@ -1,0 +1,42 @@
+version: "3.7"
+services:
+
+  oidcprovider20  :
+    build:
+      context: .
+    image: "oidcprovider:latest"
+    #
+    #   No automatic restart after failure
+    #   to be able to catch the lengthy keycloak logs
+    #
+    restart: "no"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://127.0.0.1:9990/auth" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    ports:
+      - "9082:8080"
+    environment:
+      - KC_HOSTNAME_STRICT=false
+      - KC_HOSTNAME_STRICT_HTTPS=false #For local access to console admin in start mode
+      - DEBUG=true
+      - DEBUG_PORT=*:8100
+      - KEYCLOAK_ADMIN=keycloak
+      - KEYCLOAK_ADMIN_PASSWORD=password
+    command:
+      [
+        "--verbose",
+        # to display the config used, if enabled, the "start" and "--optimized" parameter MUST be commented
+        #"show-config",
+        "start",
+        "--proxy=edge",
+      ]
+    networks:
+      - local-network
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+networks:
+  local-network:
+    driver: bridge
