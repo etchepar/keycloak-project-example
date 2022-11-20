@@ -14,8 +14,8 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <keycloak.version>20.0.1</keycloak.version>
-        <quarkus.version>2.13.3.Final</quarkus.version>
+        <keycloak.version>19.0.3</keycloak.version>
+        <quarkus.version>2.7.6.Final</quarkus.version>
         <quarkus.native.builder-image>mutable-jar</quarkus.native.builder-image>
     </properties>
 
@@ -194,5 +194,6 @@
 
         </plugins>
     </build>
+
 
 </project>
